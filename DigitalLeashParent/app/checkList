@@ -1,0 +1,165 @@
+
+
+Make a GET request to the URL given below when you select the child username from the list in the parent app.
+
+https://turntotech.firebaseio.com/digitalleash/users/{parent_username}/{child_username}.json
+
+This will return the child location. Check if the location is within the radius of parent location.
+If yes, show the green screenshot below, else show the red screen.
+
+When the Close button is clicked, go back to previous screen.
+
+
+1. define the url and methodrequest(GET)
+2. you need to get the position on selecting the child
+3. when you select the child you need to get the url location lat and long
+4. so you have two locations one of parents and one of child
+5. find the distance between the child and parent using radius
+6  if near safe zone els danger
+
+---------------------------------------------------------------------------------------------------------------------------
+
+  if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+            }
+            return;
+        }
+
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {                   // the object that you are sending is the location
+                        if (location != null) {
+
+                            parent_latitude_value = String.valueOf(location.getLatitude());
+                            parent_longitude_value = String.valueOf(location.getLongitude());
+
+                            parent_latitude_etext.setText(parent_latitude_value);                                                                     // lat and long values of parent
+                            parent_longitude_etext.setText(parent_longitude_value);
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "NULL" + location.toString(), Toast.LENGTH_LONG);
+                        }
+
+                    }
+                });
+
+
+        //permission for app location on check up.
+
+        //Call requires permission which may be rejected by user: code should explicitly
+        // check to see if permission is available (with checkPermission)
+-------------------------------------------------------------------------------------------------------
+/* listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                getChildLocation(fusedLocationProviderClient);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });*/
+
+        -----------------------------------------------------------------------------------------------------------
+
+  /*  private void callPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+            }
+            return;
+        }
+    }*/
+--------------------------------------------------------------------------------------------------------------------
+
+    //child location method
+    /*private void getChildLocation(FusedLocationProviderClient providerClient, final String child_select) {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+            }
+            return;
+        }
+
+
+        result = providerClient.getLastLocation();
+        Log.d("taskchild ",result.toString());
+        this.result.addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    child_latitude_value = String.valueOf(location.getLatitude());
+                    child_longitude_value = String.valueOf(location.getLongitude());
+                    try {
+                        json_location.put(LATITUDE, child_latitude_value);
+                        json_location.put(LONGITUDE, child_longitude_value);
+                        json_location.put(TIMESTAMP, new Date().getTime());
+
+                        String final_urlValue = json_location.toString();
+                        new writeUrl(child_select).execute(final_urlValue);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+*/
+------------------------------------------------------------------------------------------------------------------
+inside doinbackground
+ //  final String child_to_parent = parentUsername.getText().toString();
+                //final String child_selected = childName.getText().toString();// child selected returns null err.  get the name from the position
+
+                /*StringBuffer whole_url = new StringBuffer(url_string);
+                whole_url.append(child_to_parent + "/");
+                whole_url.append(selectedChild);
+                whole_url.append(".json");
+                Log.d("url testing", whole_url.toString());
+                URL url = new URL(whole_url.toString());*/
+
+                     /*  httpURLConnection.setRequestMethod("PUT");
+                                httpURLConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+                                httpURLConnection.setRequestProperty("Accept", "application/json");
+                                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                                outputStreamWriter.write(jsonStr);
+                                outputStreamWriter.flush();
+                                outputStreamWriter.close();*/
+
+
+----------------------------------------------------------------------------------------------
+  /*  fusedLocationProviderClient_child = LocationServices.getFusedLocationProviderClient(MainActivity.this);
+                String child_chosen = (String) listView.getItemAtPosition(position);*/
+                //getChildLocation(fusedLocationProviderClient_child, child_chosen);
+
+
+
+                --------------------------------------------------------
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+            }
+            return;
+        }
+
+        fusedLocationProvider_child = LocationServices.getFusedLocationProviderClient(MainActivity.this);
+        result = fusedLocationProvider_child.getLastLocation();
+        Log.d("taskchild ", result.toString());

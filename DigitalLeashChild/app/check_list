@@ -1,0 +1,166 @@
+
+STEPS
+
+0. Permission
+
+1.  get the datas from parent and child and locations  , check with one child and then move to list
+2. pass the URL and open connection
+3. create the json object and put the values into it
+4. define the async task to get the values to the server
+5. append the values along with the URL
+
+
+
+
+
+W/System.err: java.net.UnknownHostException: Unable to resolve host "turntotech.firebaseio.com": No address associated with hostname
+        at java.net.Inet6AddressImpl.lookupHostByName(Inet6AddressImpl.java:141) MainActivity.java:177)
+ D/ConnectivityService: filterNetworkStateForUid() uid: 1000 networkInfo: [type: WIFI[] - WIFI, state: DISCONNECTED/DISCONNECTED,
+
+
+    ConnectivityManager cm =
+            (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+        return true;
+    }
+
+
+
+No value for code
+
+ /* try{
+                    object.put(ERROR, e.getMessage());
+                }
+                catch (Exception je){
+
+                }*/
+
+
+
+
+
+1.show the error on the screen / succesfull messages on the screen
+
+make a textView and set it in post method .
+
+see if you can use any other dialogs
+
+
+
+INPUTS
+---------------
+
+Make a PUT request to the URL given below
+
+https://turntotech.firebaseio.com/digitalleash/users/{parent_username}/{child_username}.json
+It will send the JSON body as:
+
+{"latitude":#####, "longitude":#####}
+
+If the request is sent successfully, you show a message saying the location was reported successfully.
+If there is error, show the error message in red as shown in the child app screenshot.
+
+
+
+
+SOME REF
+--------------------------
+
+/*
+build the url and submitting the record
+create a json req. to get the values of lat and lon
+HttpPost request = new HttpPost(serviceURLString);  pass the URL String
+
+json.put("latitude",value)
+instead of doinbackground should be doing upload
+
+private Uri buildURI(String url, Map<String, String> params) {
+
+    // build url with parameters.
+    Uri.Builder builder = Uri.parse(url).buildUpon();
+    for (Map.Entry<String, String> entry : params.entrySet()) {
+        builder.appendQueryParameter(entry.getKey(), entry.getValue());
+    }
+
+    return builder.build();
+}
+
+get json from URL
+HttpClient httpclient = new DefaultHttpClient();
+HttpGet httpget= new HttpGet(URL);
+
+HttpResponse response = httpclient.execute(httpget);
+
+if(response.getStatusLine().getStatusCode()==200){
+   String server_response = EntityUtils.toString(response.getEntity());
+   Log.i("Server response", server_response );
+} else {
+   Log.i("Server response", "Failed to get server response" );
+}
+
+URL url = new URL("http://www.example.com/resource");
+HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+httpCon.setDoOutput(true);
+httpCon.setRequestMethod("PUT");
+OutputStreamWriter out = new OutputStreamWriter(
+    httpCon.getOutputStream());
+out.write("Resource content");
+out.close();
+
+ */
+ -------------------------------------------------------------------------------------------------------------
+ SOME EXTRAS
+
+  // Log.d("code testing:", String.valueOf(httpCon.getResponseCode()));    // when u try to pass getResponsecode before getOutputStream() it was showing err
+                 //as urlconnection-cannot-write-request-body-after-response-has-been-read
+
+                 //The Accept header is used to tell the Server what kind of response you would be happy with.
+                 // In this case you're telling the server that you want JSON output, and not say text, or XML or binary junk.
+                 //The Content-Type header is used to inform the Server what YOU are sending.
+                 // In this case you're telling the Server that you're sending JSON data, and not something else.
+                 //These headers are there for Servers that support different formats, like XML, binary, text, images, whatever.
+                 // // make post request to the URL
+
+
+//  Toast toast = Toast.makeText(MainActivity.this, "TESTING " + jsonObject.toString(), Toast.LENGTH_LONG);
+
+// error = (EditText) (MainActivity.this).findViewById(R.id.error);
+
+
+                /*
+                InputStream is = null;  connect() method is invoked by conn.getInputStream();
+
+                if (httpCon.getResponseCode() == 200) {
+                    is = httpCon.getInputStream();
+                    //Toast.makeText(getApplicationContext())
+                }
+                } else {
+                    is = httpCon.getErrorStream();
+
+
+                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+                int nRead, totalBytesRead = 0;
+                byte[] data = new byte[2048];
+                while ((nRead = is.read(data, 0, data.length)) != -1) {
+                    buffer.write(data, 0, nRead);
+                    totalBytesRead += nRead;
+                }
+                byte[] bytes = buffer.toByteArray();
+
+                Log.d("output", new String(bytes)); //new String(bytes) used to convert bytes to string
+                buffer.close();
+                */
+
+
+
+
+            // the requirement of timestamp as the server  has some nomenclatures in it
+            // so when u try to put lat and lon it was returning null and after adding the timestamp
+            // it showed up with the values
+            // use getErrormsg / getResponseCode gives you the error logs so as to understand
+            // responseCode ==200 means .there is no error
+            // when timestamp wasn't mentioned, it gave an errormsg by using gerErrorMsg which was ' permission denied'
+            //401 - Unauthorized: Access is denied due to invalid credentials.
+            //You do not have permission to view this directory or page using the credentials that you supplied.
+

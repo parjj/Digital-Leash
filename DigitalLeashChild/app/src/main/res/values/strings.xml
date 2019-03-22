@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Digital Leash-Child</string>
+    <string name="parent_username">Parent Username</string>
+    <string name="parent">parent</string>
+    <string name="child_username">Child Username</string>
+    <string name="child">child</string>
+    <string name="report_location">Report Location</string>
+    <string name="message">message</string>
+</resources>
